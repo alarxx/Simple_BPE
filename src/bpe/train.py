@@ -60,6 +60,44 @@ def count_pairs(
     return pairs
 
 
+def merge_symbols(
+    s: tuple[str, ...],
+    pair: tuple[str, str]
+) -> tuple[str, ...]:
+    """Merge all occurrences of pair in a word.
+    """
+    _s: list[str] = [] # merged
+
+    i = 0
+    while i < len(s):
+        if i < len(s)-1 and s[i] == pair[0] and s[i+1] == pair[1]:
+            _s.append(s[i] + s[i+1])
+            i += 2
+        else:
+            _s.append(s[i])
+            i += 1
+
+    return tuple(_s)
+
+
+def merge_vocab(
+    vocab: dict[tuple[str, ...], int],
+    pair: tuple[str, str]
+) -> dict[tuple[str, ...], int]:
+    """Merge all occurrences of pair in vocab "words".
+    """
+    _vocab: dict[tuple[str, ...], int] = {}
+
+    # apply merge for each word
+    for s, n in vocab.items():
+        merged = merge_symbols(s, pair)
+        if merged not in _vocab:
+            _vocab[merged] = 0
+        _vocab[merged] += n
+
+    return _vocab
+
+
 if __name__ == "__main__":
     corpus = [
         "Hello, world!",    # document_1
@@ -76,3 +114,12 @@ if __name__ == "__main__":
     # Count number of pairs
     pairs = count_pairs(vocab)
     print(pairs)
+
+    # Find most common pair (named after collections.Counter.most_common(topn))
+    most_common = max(pairs, key=lambda p: pairs[p])
+    print(most_common)
+
+    # Merge pair in vocab
+    vocab = merge_vocab(vocab, most_common)
+    print(vocab)
+
