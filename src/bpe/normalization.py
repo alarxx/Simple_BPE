@@ -29,4 +29,9 @@ def normalization(text: str) -> str:
 
 if __name__ == "__main__":
     text = " _ Hello, world! _ "
-    print(normalization(text))
+
+    print(f"Raw:\n{text}", end="\n\n")
+
+    # Normalized text
+    text = normalization(text)
+    print(f"Normalized:\n{text}", end="\n\n")
