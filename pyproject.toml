@@ -17,10 +17,10 @@ dependencies = []
 Homepage = "https://github.com/alarxx/Simple_BPE"
 Issues = "https://github.com/alarxx/Simple_BPE/issues"
 
-# [build-system]
-# requires = ["hatchling"]
-# build-backend = "hatchling.build"
-#
-# # package name is simple-bpe, but import name is bpe
-# [tool.hatch.build.targets.wheel]
-# packages = ["src/bpe"]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# package name is simple-bpe, but import name is bpe
+[tool.hatch.build.targets.wheel]
+packages = ["src/bpe"]

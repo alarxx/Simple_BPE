@@ -13,7 +13,7 @@
     Copyright © 2026 Alar Akilbekov. All rights reserved.
 """
 
-from normalization import normalization
+from bpe.normalization import normalization
 
 
 END_OF_WORD = "</w>"
