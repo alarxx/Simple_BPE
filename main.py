@@ -1,4 +1,4 @@
-from src.normalization import normalization
+from bpe.normalization import normalization
 
 
 if __name__ == "__main__":
