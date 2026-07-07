@@ -28,14 +28,18 @@ if __name__ == "__main__":
     #   merge(1): [('h', 'e'), ('he', 'l')]
 
     # Get all tokens
-    all_tokens = get_all_tokens(vocab, merges)
+    all_tokens: set[str] = get_all_tokens(vocab, merges)
+    print(sorted(all_tokens))
+    #   ['</w>', '<unk>', 'd', 'e', 'h', 'he', 'hel', 'l', 'o', 'r', 'w']
 
 
     # Encode text
     text = normalization("Hello, BPE!")
     tokens = encode(text, merges, all_tokens)
-    print(tokens) # ['hel', 'l', 'o', '</w>', '<unk>', '<unk>', 'e', '</w>']
+    print(tokens)
+    #   ['hel', 'l', 'o', '</w>', '<unk>', '<unk>', 'e', '</w>']
 
     # Decode tokens
     text = decode(tokens)
-    print(text) # hello ??e
+    print(text)
+    #   hello ??e
