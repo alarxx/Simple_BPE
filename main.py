@@ -9,6 +9,8 @@ from bpe.encode_decode import encode, decode
 
 if __name__ == "__main__":
     corpus = [
+        # alphabet
+        # digits
         "Hello, world!",    # document_1
         "Hello!",           # document_2
     ]
