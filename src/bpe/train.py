@@ -98,6 +98,33 @@ def merge_vocab(
     return _vocab
 
 
+def train_bpe(
+    vocab: dict[tuple[str, ...], int],
+    num_merges: int
+) -> tuple[dict[tuple[str, ...], int], list[tuple[str, str]]]:
+    """Repeateldy merge most common pairs several times in a loop.
+    """
+    merges: list[tuple[str, str]] = [] # each merge-pair is a token
+
+    for i in range(num_merges):
+        # Count number of pairs
+        pairs = count_pairs(vocab)
+
+        # Find most common pair (named after collections.Counter.most_common(topn))
+        most_common = max(pairs, key=lambda p: pairs[p])
+
+        # Save merge-pair
+        merges.append(most_common)
+
+        # Merge-pair in vocab
+        vocab = merge_vocab(vocab, most_common)
+
+        print(f"merges({i}):", merges, end="\n\n")
+        print(f"vocab({i}):", vocab, end="\n\n")
+
+    return vocab, merges
+
+
 if __name__ == "__main__":
     corpus = [
         "Hello, world!",    # document_1
@@ -111,15 +138,18 @@ if __name__ == "__main__":
     vocab = build_vocab(corpus)
     print(vocab) # {('h', 'e', 'l', 'l', 'o', '</w>'): 1, ...}
 
-    # Count number of pairs
-    pairs = count_pairs(vocab)
-    print(pairs)
+    # # One manual merge
+    # # Count number of pairs
+    # pairs = count_pairs(vocab)
+    # print(pairs)
+    #
+    # # Find most common pair (named after collections.Counter.most_common(topn))
+    # most_common = max(pairs, key=lambda p: pairs[p])
+    # print(most_common)
+    #
+    # # Merge pair in vocab
+    # vocab = merge_vocab(vocab, most_common)
+    # print(vocab)
 
-    # Find most common pair (named after collections.Counter.most_common(topn))
-    most_common = max(pairs, key=lambda p: pairs[p])
-    print(most_common)
-
-    # Merge pair in vocab
-    vocab = merge_vocab(vocab, most_common)
-    print(vocab)
-
+    # Loop merge repeatedly
+    _, merges = train_bpe(vocab, 2)
