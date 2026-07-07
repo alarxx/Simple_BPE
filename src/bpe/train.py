@@ -125,6 +125,28 @@ def train_bpe(
     return vocab, merges
 
 
+def get_all_tokens(
+    vocab: dict[tuple[str, ...], int], # initial vocab
+    merges: list[tuple[str, str]],
+    unk: str = UNKNOWN_SYMBOL
+) -> set[str]:
+    tokens: set[str] = set()
+
+    # 1. base vocab symbols, e.g. 'h', 'i', '</w>'
+    for s in vocab:
+        for c in s:
+            tokens.add(c)
+
+    # 2. merge-tokens
+    for l, r in merges:
+        tokens.add(l + r)
+
+    # 3. special symbols
+    tokens.add(unk)
+
+    return tokens
+
+
 if __name__ == "__main__":
     corpus = [
         "Hello, world!",    # document_1
@@ -153,3 +175,7 @@ if __name__ == "__main__":
 
     # Loop merge repeatedly
     _, merges = train_bpe(vocab, 2)
+
+    # Get all tokens
+    all_tokens = get_all_tokens(vocab, merges)
+    print(sorted(all_tokens))
