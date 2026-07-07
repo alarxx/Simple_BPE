@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     # Encode text
     tokens = encode(normalization("Hello, BPE!"), merges, all_tokens)
-    print(tokens)
+    print(tokens) # ['hel', 'l', 'o', '</w>', '<unk>', '<unk>', 'e', '</w>']
 
     # Decode tokens
-    print(decode(tokens))
+    print(decode(tokens)) # hello ??e
