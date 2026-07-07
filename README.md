@@ -66,6 +66,8 @@ _, merges = train_bpe(vocab, 2)
 
 # Get all tokens
 all_tokens = get_all_tokens(vocab, merges)
+print(sorted(all_tokens))
+#   ['</w>', '<unk>', 'd', 'e', 'h', 'he', 'hel', 'l', 'o', 'r', 'w']
 ```
 
 ---
