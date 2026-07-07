@@ -26,7 +26,7 @@ def build_vocab(
 ) -> dict[tuple[str, ...], int]:
     """Build initital vocab from corpus of text.
     """
-    vocab = {}
+    vocab: dict[tuple[str, ...], int] = {}
 
     for text in corpus:
         for word in text.split():
@@ -42,9 +42,28 @@ def build_vocab(
     return vocab
 
 
+def count_pairs(
+    vocab: dict[tuple[str, ...], int],
+) -> dict[tuple[str, str], int]:
+    """Count number of all occurring pairs (frequency).
+    """
+    pairs: dict[tuple[str, str], int] = {}
+
+    for s, n in vocab.items():
+        # s, n = ('h', 'i', '</w>'), 5
+        for i in range(len(s) - 1):
+            pair = (s[i], s[i+1])
+            if pair not in pairs:
+                pairs[pair] = 0
+            pairs[pair] += n # 1 * n
+
+    return pairs
+
+
 if __name__ == "__main__":
     corpus = [
-        " _ Hello, world! _ ", # document
+        "Hello, world!",    # document_1
+        "Hello!",           # document_2
     ]
 
     # Normalization
@@ -53,3 +72,7 @@ if __name__ == "__main__":
     # Build initital vocab
     vocab = build_vocab(corpus)
     print(vocab) # {('h', 'e', 'l', 'l', 'o', '</w>'): 1, ...}
+
+    # Count number of pairs
+    pairs = count_pairs(vocab)
+    print(pairs)
